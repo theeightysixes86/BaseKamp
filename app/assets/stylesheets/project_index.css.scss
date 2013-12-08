@@ -1,0 +1,81 @@
+#new_project {
+  float: left;
+  text-align: center;
+  font-size: 14px;
+}
+
+#new_project_box {
+  background: white;
+  width: 90px;
+  height: 100px;
+  color: #98BE89;
+  font-size: 70px;
+  font-weight: 800;
+  box-shadow: 0px 0px 7px #aaa;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+#new_project a {
+  text-decoration: none;
+  color: #777;
+  text-shadow: 1px 1px white;
+}
+
+#new_project a:hover {
+  text-decoration: underline;
+  color: black;
+}
+
+#all_projects {
+  margin-left: 50px;
+  float: left;
+  width: 84%;
+}
+
+h3 {
+  border: 0;
+  padding: 0px 0px 0px 0px;;
+  margin: 0;
+  font-family: 'Alegreya Sans SC', sans-serif;
+  text-shadow: 1px 1px white;
+  margin-bottom: 10px;
+}
+
+.project {
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.star {
+  background-image: url(image_path("star-sprite.png"));
+  width: 20px;
+  height: 17px;
+  display: inline-block;
+  margin-right: 5px;
+  margin-bottom: -2px;
+  cursor: pointer;
+}
+
+.filled {
+  background-position: 0px 0px;
+}
+
+.empty {
+  background-position: 0px -16px;
+}
+
+.project-title {
+}
+
+.darken {
+  top: 0;
+  left: 0;
+  position: absolute;
+  background: rgba(0,0,0,0.7);
+  width: 100%;
+  height: 100%;
+}

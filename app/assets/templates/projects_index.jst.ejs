@@ -1,0 +1,13 @@
+<article id="new_project">
+  <div id="new_project_box">+</div>
+  <a href="#">New Project</a>
+</article>
+<article id="all_projects">
+  <h3>All Projects</h3>
+  <% projects.each(function(project){ %>
+    <article class="project">
+      <% var filled = project.get("is_favorite") ? "star" : "star empty" %>
+      <div class="<%= filled %>" id="<%= project.get('id') %>"></div><span class="project-title"><%= project.get("title") %></span>
+    </article>
+  <% }); %>
+</article>

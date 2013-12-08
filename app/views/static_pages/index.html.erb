@@ -1,0 +1,27 @@
+<nav class="group">
+  <span id="logo"><a href="#">BaseKamp</a> &nbsp;&nbsp;&nbsp;</span>
+  <ul>
+    <li></li>
+    <li><a href="#">Projects</a></li>
+    <li><a href="#">Calendar</a></li>
+    <li><a href="#">Everything</a></li>
+    <li></li>
+  </ul>
+  <span id="logo">&nbsp;</span>
+  <ul>
+    <li></li>
+    <li><a href="#">My Account</a></li>
+    <li></li>
+  </ul>
+  <ul class="logout">
+    <li></li>
+    <li><a href="#">Logout</a></li>
+    <li></li>
+  </ul>
+</nav>
+<section id="main">
+</section>
+
+<script type="application/json" id="projects">
+  <%= current_user.projects.order("is_favorite DESC").to_json.html_safe %>
+</script>
