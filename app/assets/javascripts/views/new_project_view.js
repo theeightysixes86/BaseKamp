@@ -6,7 +6,9 @@ BaseKamp.Views.NewProjectView = Backbone.View.extend({
   events: {
     "click #close_pane": "leave",
     "focus .member": "member_focus",
-    "blur .member": "member_blur"
+    "blur .member": "member_blur",
+    "click #new-member": "add_new_member",
+    "click .remove-member": "remove_member"
   },
 
   render: function() {
@@ -16,6 +18,14 @@ BaseKamp.Views.NewProjectView = Backbone.View.extend({
     this.$el.append(renderedContent);
 
     return this;
+  },
+
+  remove_member: function() {
+    $(event.target).parent().remove();
+  },
+
+  add_new_member: function() {
+    $("#team-members").append(JST['project_user_view']());
   },
 
   member_blur: function() {

@@ -67,15 +67,46 @@
 
   .member {
     border-bottom: 1px dotted #ccc;
-    width: 95%;
+    width: 91%;
     margin: 0;
     height: 25px;
     font-size: 15px;
   }
 
+  .remove-member {
+    background-image: url(image_path("circle-x.png"));
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.3;
+    height: 25px;
+    width: 25px;
+    display: inline-block;
+    float: right;
+    cursor: pointer;
+  }
+
   .team_member {
     margin-bottom: 8px;
   }
+
+  #new-member {
+    float: right;
+    font-size: 12px;
+    color: green;;
+    cursor: pointer;
+  }
+
+  input[type=submit] {
+    margin-top: 20px;
+    margin-bottom: 0px;
+    background: green;
+    color: white;
+    border-radius: 5px;
+    font-size: 15px;
+    width: auto;
+    padding: 10px;
+  }
+
 }
 
 #close_pane {
