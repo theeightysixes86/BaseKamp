@@ -1,6 +1,11 @@
 BaseKamp.Views.ProjectIndexView = Backbone.View.extend({
   initialize: function(){
-    this.$el = $("<div class='group'>")
+    var that = this;
+
+    that.$el = $("<div class='group'>");
+    that.listenTo(BaseKamp.projects, 'add', function() {
+      BaseKamp.projects_router.swap(new BaseKamp.Views.ProjectIndexView)
+    });
   },
 
   events: {

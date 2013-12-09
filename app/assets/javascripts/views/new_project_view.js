@@ -8,7 +8,8 @@ BaseKamp.Views.NewProjectView = Backbone.View.extend({
     "focus .member": "member_focus",
     "blur .member": "member_blur",
     "click #new-member": "add_new_member",
-    "click .remove-member": "remove_member"
+    "click .remove-member": "remove_member",
+    "click input[type=submit]": "create_new_member"
   },
 
   render: function() {
@@ -18,6 +19,26 @@ BaseKamp.Views.NewProjectView = Backbone.View.extend({
     this.$el.append(renderedContent);
 
     return this;
+  },
+
+  create_new_member: function() {
+    var that = this;
+    event.preventDefault();
+    var $form = $("form");
+
+    $.ajax({
+      type: $form.attr("method"),
+      url: $form.attr("action"),
+      data: $form.serializeJSON(),
+      success: function(data) {
+        var project = new BaseKamp.Models.Project(data);
+
+        that.leave(function() {
+          BaseKamp.projects.add(project);
+        });
+      }
+    })
+
   },
 
   remove_member: function() {
@@ -45,7 +66,7 @@ BaseKamp.Views.NewProjectView = Backbone.View.extend({
         },
         success: function(data) {
           $blurred.siblings('input[type=hidden]').remove();
-          $blurred.parent().append("<input type='hidden' value='" + data.id + "' name=user_ids[]>");
+          $blurred.parent().append("<input type='hidden' value='" + data.id + "' name=project[user_ids][]>");
           $blurred.siblings('.member-icon').removeClass('warning-icon');
         }
       });
@@ -56,14 +77,15 @@ BaseKamp.Views.NewProjectView = Backbone.View.extend({
     $(document.activeElement).siblings('.member-icon').addClass('green-icon');
   },
 
-  leave: function() {
+  leave: function(callback) {
     $("#project_pane").animate({ width: 0, height: 0, padding: 0 }, {
         complete: function() {
           $(this).remove();
 
           $(".darken").fadeOut(200, function() {
             $(".darken").remove();
-          });
+            if (typeof callback == "function") { callback(); }
+          })
         },
         duration: 300
     });
