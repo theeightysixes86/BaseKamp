@@ -21,7 +21,9 @@ BaseKamp.Views.NewProjectView = Backbone.View.extend({
   },
 
   remove_member: function() {
-    $(event.target).parent().remove();
+    $(event.target).parent().slideUp(300, function() {
+      $(this).remove();
+    });
   },
 
   add_new_member: function() {
@@ -29,25 +31,25 @@ BaseKamp.Views.NewProjectView = Backbone.View.extend({
   },
 
   member_blur: function() {
-    $(".member").each(function(index, element){
-      var $input = $(element);
-      if ($input.val() == "") {
+    $blurred = $(event.srcElement);
 
-        $input.siblings('.member-icon').removeClass('green-icon warning-icon');
-      } else {
-        $.ajax({
-          type: "POST",
-          url: "/user_exists",
-          data: { name: $input.val() },
-          error: function() {
-            $input.siblings('.member-icon').addClass('warning-icon');
-          },
-          success: function() {
-            $input.siblings('.member-icon').removeClass('warning-icon');
-          }
-        });
-      }
-    })
+    if ($blurred.val() == "") {
+      $blurred.siblings('.member-icon').removeClass('green-icon warning-icon');
+    } else {
+      $.ajax({
+        type: "POST",
+        url: "/user_exists",
+        data: { name: $blurred.val() },
+        error: function() {
+          $blurred.siblings('.member-icon').addClass('warning-icon');
+        },
+        success: function(data) {
+          $blurred.siblings('input[type=hidden]').remove();
+          $blurred.parent().append("<input type='hidden' value='" + data.id + "' name=user_ids[]>");
+          $blurred.siblings('.member-icon').removeClass('warning-icon');
+        }
+      });
+    }
   },
 
   member_focus: function() {

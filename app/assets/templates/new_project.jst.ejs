@@ -1,7 +1,8 @@
 <article id="project_pane">
 <span id="close_pane">close</span>
-<input class="project-title" value="Name your project">
-<input class="project-description" placeholder="Add a short description">
+<form>
+<input class="project-title" name="project[title]" value="Name your project">
+<input class="project-description" name="project[description]" placeholder="Add a short description">
 <h2>Invite people to your team</h2>
 <p>Anyone invited to your team can see all materials related to the project. Every message, to-do list, file, event, and text document.</p>
 <div id="team-members">
@@ -12,4 +13,5 @@
 <p id="new-member">Add another...</p>
 
 <input type="submit" value="Start this project!">
+</form>
 </article>

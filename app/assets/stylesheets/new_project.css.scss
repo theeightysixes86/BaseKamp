@@ -14,7 +14,7 @@
   margin: 130px auto;
   border-radius: 4px;
   padding: 20px;
-  box-shadow: 0px 0px 7px #aaa;
+  box-shadow: 0px 0px 7px #999;
 
   input {
     width: 100%;
@@ -83,6 +83,11 @@
     display: inline-block;
     float: right;
     cursor: pointer;
+    transition: all 0.5s;
+  }
+
+  .remove-member:hover {
+    opacity: 1;
   }
 
   .team_member {
