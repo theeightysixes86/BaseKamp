@@ -12,4 +12,5 @@
  *= require main
  *= require project_index
  *= require new_project
+ *= require project_show
  */

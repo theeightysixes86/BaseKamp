@@ -7,7 +7,7 @@
   <% projects.each(function(project){ %>
     <article class="project">
       <% var filled = project.get("is_favorite") ? "star" : "star empty" %>
-      <div class="<%= filled %>" id="<%= project.get('id') %>"></div><span class="project-title"><%= project.get("title") %></span>
+      <div class="<%= filled %>" id="<%= project.get('id') %>"></div><a href="#/projects/<%= project.get('id') %>" class="project-title"><%= project.get("title") %></a>
     </article>
   <% }); %>
 </article>

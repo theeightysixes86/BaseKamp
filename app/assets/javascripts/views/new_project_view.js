@@ -84,6 +84,7 @@ BaseKamp.Views.NewProjectView = Backbone.View.extend({
 
           $(".darken").fadeOut(200, function() {
             $(".darken").remove();
+            // Why is a jQuery event sometimes being provided to this function?
             if (typeof callback == "function") { callback(); }
           })
         },

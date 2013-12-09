@@ -3,6 +3,19 @@ BaseKamp.Routers.ProjectRouter = Backbone.Router.extend({
     this.$el = $el;
   },
 
+  routes: {
+    "": "project_index",
+    "projects/:id": "project_detail"
+  },
+
+  project_index: function() {
+    this.swap(new BaseKamp.Views.ProjectIndexView);
+  },
+
+  project_detail: function(id) {
+    this.swap(new BaseKamp.Views.ProjectDetailView(BaseKamp.projects.get({id: id })));
+  },
+
   swap: function(newView) {
     if (this.currentView && this.currentView.leave) {
       this.currentView.leave();

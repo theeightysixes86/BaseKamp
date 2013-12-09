@@ -29,8 +29,7 @@ BaseKamp.Views.ProjectIndexView = Backbone.View.extend({
         $target.toggleClass('empty');
 
         BaseKamp.projects.sort();
-        var projects_index_view = new BaseKamp.Views.ProjectIndexView();
-        BaseKamp.projects_router.swap(projects_index_view);
+        BaseKamp.projects_router.swap(new BaseKamp.Views.ProjectIndexView);
       }
     });
   },
