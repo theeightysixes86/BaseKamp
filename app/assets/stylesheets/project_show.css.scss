@@ -5,6 +5,18 @@
   box-shadow: 0px 0px 7px #999;
   border-radius: 4px;
   padding: 20px;
+  position: relative;
+
+  aside {
+    float: right;
+    padding-top: 11px;
+    vertical-align: bottom;
+    font-size: 14px;
+
+    a {
+      color: rgb(28,92,118);
+    }
+  }
 
   h2 {
     margin: 0;
@@ -19,9 +31,34 @@
     height: 17px;
     margin-top: 9px;
     margin-bottom: 4px;
-    margin-left: 5px;
+    margin-left: 10px;
     display: inline-block;
 
     cursor: pointer;
   }
+
+  #project-title {
+    margin: 0;
+    font-size: 22px;
+    font-weight: bold;
+    border: 0;
+    font-family: 'Open Sans', sans-serif;
+    border-bottom: 1px dotted #aaa;
+    width: auto;
+    float: left;
+    outline: 0;
+    box-sizing: border-box;
+    height: 30px;
+  }
+}
+
+#add_members {
+  position: absolute;
+  top: 55px;
+  left: 20px;
+  width: 0;
+  height: 0;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0px 0px 7px #999;
 }

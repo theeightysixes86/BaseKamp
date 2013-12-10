@@ -78,13 +78,17 @@ BaseKamp.Views.NewProjectView = Backbone.View.extend({
   },
 
   leave: function(callback) {
-    $("#project_pane").animate({ width: 0, height: 0, padding: 0 }, {
+    var $project_pane = $("#project_pane");
+
+    $project_pane.css({ width: $project_pane.width(), height: $project_pane.height() });
+    $project_pane.empty();
+
+    $project_pane.animate({ width: 0, height: 0, padding: 0 }, {
         complete: function() {
           $(this).remove();
 
           $(".darken").fadeOut(200, function() {
             $(".darken").remove();
-            // Why is a jQuery event sometimes being provided to this function?
             if (typeof callback == "function") { callback(); }
           })
         },

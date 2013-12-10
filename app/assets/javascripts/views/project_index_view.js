@@ -43,7 +43,8 @@ BaseKamp.Views.ProjectIndexView = Backbone.View.extend({
     return this;
   },
 
-  leave: function() {
+  leave: function(callback) {
+    if (typeof callback == "function") { callback(); }
     this.off();
     this.remove();
   }

@@ -69,10 +69,11 @@ h3 {
 }
 
 a.project-title {
-  color: #1C5C76;
+  color: #333;
   text-decoration: none;
 
   &:hover {
+    color: #1C5C76;
     text-decoration: underline;
   };
 }

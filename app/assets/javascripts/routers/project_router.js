@@ -17,12 +17,17 @@ BaseKamp.Routers.ProjectRouter = Backbone.Router.extend({
   },
 
   swap: function(newView) {
-    if (this.currentView && this.currentView.leave) {
-      this.currentView.leave();
-    }
+    var that = this;
 
-    this.currentView = newView;
-    this.$el.empty().append(newView.render().$el);
+    if (that.currentView && that.currentView.leave) {
+      that.currentView.leave(function() {
+        that.currentView = newView;
+        that.$el.empty().append(newView.render().$el);
+      });
+    } else {
+      that.currentView = newView;
+      that.$el.empty().append(newView.render().$el);
+    }
   },
 
   append: function(newView) {
