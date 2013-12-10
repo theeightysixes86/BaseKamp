@@ -25,6 +25,12 @@
     float: left;
   }
 
+  .link {
+    text-decoration: underline;
+    color: #1C5C76;
+    cursor: pointer;
+  }
+
   .star {
     background-image: url(image_path("star-sprite.png"));
     width: 20px;
@@ -50,15 +56,4 @@
     box-sizing: border-box;
     height: 30px;
   }
-}
-
-#add_members {
-  position: absolute;
-  top: 55px;
-  left: 20px;
-  width: 0;
-  height: 0;
-  background: white;
-  border-radius: 4px;
-  box-shadow: 0px 0px 7px #999;
 }

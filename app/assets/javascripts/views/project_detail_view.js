@@ -18,18 +18,28 @@ BaseKamp.Views.ProjectDetailView = Backbone.View.extend({
     if (this.childView) {
       this.childView.leave(function() {
         $("#project").removeAttr('style');
+        $("#project h2").removeClass('link');
       });
       this.childView = null;
     }
   },
 
   add_member_view: function(event) {
+    var that = this;
     event.preventDefault();
+    if (this.childView) { return; }
 
     this.childView = new BaseKamp.Views.AddMemberView;
-    $("#project").css({ background: 'rgb(249,249,249)', 'box-shadow': '0px 0px 0px', border: '1px solid rgb(230,230,230)'});
     $("#project").append(this.childView.render().$el);
-    $("#add_members").animate({ width: '100%', height: '500px'})
+    $("#add_members").animate({ width: '770px', height: '400px'}, {
+      complete: function() {
+        that.childView.append_content();
+        $("#project h2").addClass('link');
+        $("#project").css({ background: 'rgb(249,249,249)', 'box-shadow': '0px 0px 0px', border: '1px solid rgb(230,230,230)'});
+      },
+
+      duration: 200
+    })
   },
 
   new_title: function() {
@@ -75,6 +85,8 @@ BaseKamp.Views.ProjectDetailView = Backbone.View.extend({
 
   leave: function(callback) {
     var that = this;
+
+    if (that.childView) { that.childView.leave(); }
     var $project = $("#project");
 
     $project.css({ width: $project.width(), height: $project.height() });

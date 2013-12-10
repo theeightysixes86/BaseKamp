@@ -13,4 +13,5 @@
  *= require project_index
  *= require new_project
  *= require project_show
+ *= require add_member
  */
