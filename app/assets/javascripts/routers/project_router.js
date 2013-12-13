@@ -11,16 +11,19 @@ BaseKamp.Routers.ProjectRouter = Backbone.Router.extend({
   project_index: function() {
     // this.swap(new BaseKamp.Views.ProjectIndexView);
 
-    // Testing so I don't have to click a bunch of shit.
-    // var testing_view = new BaseKamp.Views.ProjectDetailView(BaseKamp.projects.get({id: 21 }))
-    // this.swap(testing_view);
+    // Testing
 
-    this.project_detail(20);
-
-    // testing_view.add_member_view({ preventDefault: function() { }});
+    this.project_detail(21);
   },
 
   project_detail: function(id) {
+    var that = this;
+    var project = BaseKamp.projects.get({id: id });
+    // project.fetch_associated_info(function() {
+    //   var projectDetailView = new BaseKamp.Views.ProjectDetailView(project);
+    //   that.swap(projectDetailView);
+    //
+    // });
     var projectDetailView = new BaseKamp.Views.ProjectDetailView(BaseKamp.projects.get({id: id }));
     projectDetailView.fetch_project_info(this.swap.bind(this, projectDetailView))
     // this.swap(projectDetailView);

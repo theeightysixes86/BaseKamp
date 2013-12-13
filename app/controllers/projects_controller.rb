@@ -14,4 +14,9 @@ class ProjectsController < ApplicationController
       render json: nil, status: :unprocessable_entity
     end
   end
+
+  def associated_info
+    @project = Project.find_by_id(params[:id])
+    render json: { discussions: @project.discussions, todos: @project.todos }
+  end
 end
