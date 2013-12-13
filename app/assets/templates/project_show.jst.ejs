@@ -1,3 +1,21 @@
 <h2><%= project.get("title") %></h2>
 <div class="star <%= project.get('is_favorite') ? 'filled' : 'empty' %>"></div>
 <aside><a href="#">Invite more people</a></aside>
+<nav id="actions" class="group">
+<ul class="group existing">
+<% if (discussions.length) { %>
+  <li><a href="#"><%= discussions.length %> Discussion(s)</a></li>
+<% } %>
+<% if (todos.length) { %>
+  <li><a href="#"><%= todos.length %> Todos</a></li>
+<% } %>
+</ul>
+<ul>
+  <li>Add a new...</li>
+  <li><a href="#">Discussion</a></li>
+  <li><a href="#">Todo</a></li>
+  <li><a href="#">File</a></li>
+  <li><a href="#">Date</a></li>
+</ul>
+
+</nav>

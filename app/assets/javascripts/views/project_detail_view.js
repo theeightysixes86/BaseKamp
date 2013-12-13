@@ -14,6 +14,44 @@ BaseKamp.Views.ProjectDetailView = Backbone.View.extend({
     "click h2": "remove_member_view"
   },
 
+  fetch_project_info: function(callback) {
+    var that = this;
+    that.discussions = new BaseKamp.Collections.Discussions;
+    that.todos = new BaseKamp.Collections.Todos;
+
+    // REFACTOR: One request, plz.
+
+    $.ajax({
+      type: "GET",
+      url: "/projects/" + that.model.id + "/discussions",
+      success: function(data) {
+        data.forEach(function(datum) {
+          that.discussions.add(new BaseKamp.Models.Discussion(datum));
+        });
+        that.fetch_todos(callback);
+      }
+    });
+  },
+
+  fetch_todos: function(callback) {
+    var that = this;
+
+    $.ajax({
+      type: "GET",
+      url: "/projects/" + that.model.id + "/todos",
+      success: function(data) {
+        data.forEach(function(datum) {
+          that.todos.add(new BaseKamp.Models.Todo(datum));
+        });
+      },
+      complete: function() {
+        callback();
+        console.log(that.discussions);
+        console.log(that.todos);
+      }
+    })
+  },
+
   remove_member_view: function() {
     if (this.childView) {
       this.childView.leave(function() {
@@ -77,7 +115,7 @@ BaseKamp.Views.ProjectDetailView = Backbone.View.extend({
     this.$el.empty();
     var templateFn = JST["project_show"];
 
-    var renderedContent = templateFn({ project: this.model });
+    var renderedContent = templateFn({ project: this.model, discussions: this.discussions, todos: this.todos });
     this.$el.append(renderedContent);
 
     return this;
