@@ -1,10 +1,10 @@
 <h2><%= project.get("title") %></h2>
 <div class="star <%= project.get('is_favorite') ? 'filled' : 'empty' %>"></div>
-<aside><a href="#">Invite more people</a></aside>
+<aside><a href="#" class='add-members'>Invite more people</a></aside>
 <nav id="actions" class="group">
 <ul class="group existing">
 <% if (discussions.length) { %>
-  <li><a href="#"><%= discussions.length %> Discussion(s)</a></li>
+  <li><a href="#" class="existing-discussions"><%= discussions.length %> Discussion(s)</a></li>
 <% } %>
 <% if (todos.length) { %>
   <li><a href="#"><%= todos.length %> Todos</a></li>

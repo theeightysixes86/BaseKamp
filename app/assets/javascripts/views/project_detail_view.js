@@ -10,49 +10,12 @@ BaseKamp.Views.ProjectDetailView = Backbone.View.extend({
     "click .star": "flip_favorite",
     "dblclick h2": "edit_title",
     "keypress": "new_title",
-    "click aside": "add_member_view",
-    "click h2": "remove_member_view"
+    "click .existing-discussions": "add_child_view",
+    "click aside": "add_child_view",
+    "click h2": "remove_child_view",
   },
 
-  fetch_project_info: function(callback) {
-    var that = this;
-    that.discussions = new BaseKamp.Collections.Discussions;
-    that.todos = new BaseKamp.Collections.Todos;
-
-    // REFACTOR: One request, plz.
-
-    $.ajax({
-      type: "GET",
-      url: "/projects/" + that.model.id + "/discussions",
-      success: function(data) {
-        data.forEach(function(datum) {
-          that.discussions.add(new BaseKamp.Models.Discussion(datum));
-        });
-        that.fetch_todos(callback);
-      }
-    });
-  },
-
-  fetch_todos: function(callback) {
-    var that = this;
-
-    $.ajax({
-      type: "GET",
-      url: "/projects/" + that.model.id + "/todos",
-      success: function(data) {
-        data.forEach(function(datum) {
-          that.todos.add(new BaseKamp.Models.Todo(datum));
-        });
-      },
-      complete: function() {
-        callback();
-        console.log(that.discussions);
-        console.log(that.todos);
-      }
-    })
-  },
-
-  remove_member_view: function() {
+  remove_child_view: function() {
     if (this.childView) {
       this.childView.leave(function() {
         $("#project").removeAttr('style');
@@ -62,15 +25,25 @@ BaseKamp.Views.ProjectDetailView = Backbone.View.extend({
     }
   },
 
-  add_member_view: function(event) {
+  add_child_view: function(event) {
+    var $target = $(event.target);
+
     var that = this;
     event.preventDefault();
-    if (this.childView) { return; }
+    if (that.childView) { return; }
 
-    this.childView = new BaseKamp.Views.AddMemberView;
+    if ($target.hasClass('add-members')) {
+      that.childView = new BaseKamp.Views.AddMemberView;
+    } else if ($target.hasClass('existing-discussions')) {
+      that.childView = new BaseKamp.Views.DiscussionsIndexView;
+    }
+
+    // .render() for a childView should return an empty $("<div></div>") w/ css ID.
     $("#project").append(this.childView.render().$el);
-    $("#add_members").animate({ width: '770px', height: '400px'}, {
+
+    $("#" + this.childView.$el.attr("id")).animate({ width: '770px', height: that.childView.rendered_height + 'px'}, {
       complete: function() {
+        // .append_content() for a childView should inject the rendered JST template.
         that.childView.append_content();
         $("#project h2").addClass('link');
         $("#project").css({ background: 'rgb(249,249,249)', 'box-shadow': '0px 0px 0px', border: '1px solid rgb(230,230,230)'});
@@ -85,7 +58,8 @@ BaseKamp.Views.ProjectDetailView = Backbone.View.extend({
 
     if ($target.is("#project-title") && event.charCode == 13) {
       var value = $target.val();
-      this.model.set("title", value);
+      // this.model.set("title", value);
+      this.model.save({title: value});
       $target.parent().prepend("<h2>" + value + "</h2>");
       $target.remove();
     }
@@ -115,7 +89,7 @@ BaseKamp.Views.ProjectDetailView = Backbone.View.extend({
     this.$el.empty();
     var templateFn = JST["project_show"];
 
-    var renderedContent = templateFn({ project: this.model, discussions: this.discussions, todos: this.todos });
+    var renderedContent = templateFn({ project: this.model, discussions: this.model.discussions, todos: this.model.todos });
     this.$el.append(renderedContent);
 
     return this;
@@ -123,10 +97,9 @@ BaseKamp.Views.ProjectDetailView = Backbone.View.extend({
 
   leave: function(callback) {
     var that = this;
+    that.remove_child_view();
 
-    if (that.childView) { that.childView.leave(); }
     var $project = $("#project");
-
     $project.css({ width: $project.width(), height: $project.height() });
     $project.empty();
     $project.animate({ width: 0, height: 0, padding: 0}, {

@@ -1,6 +1,6 @@
-BaseKamp.Views.AddMemberView = Backbone.View.extend({
+BaseKamp.Views.DiscussionsIndexView = Backbone.View.extend({
   initialize: function() {
-    this.generic_popup_view = new BaseKamp.Views.GenericPopupView({ id: "add_members", jst: "add_members" });
+    this.generic_popup_view = new BaseKamp.Views.GenericPopupView({ id: "discussions", jst: "discussions_index" });
     this.$el = this.generic_popup_view.$el;
 
     // this.$el = $("<div id='discussions'></div>");
@@ -53,4 +53,4 @@ BaseKamp.Views.AddMemberView = Backbone.View.extend({
     //   duration: 200
     // });
   }
-})
+});
