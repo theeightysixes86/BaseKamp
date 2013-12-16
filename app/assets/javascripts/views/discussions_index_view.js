@@ -16,6 +16,6 @@ BaseKamp.Views.DiscussionsIndexView = Backbone.View.extend({
   },
 
   leave: function(callback) {
-    this.generic_popup_view.leave();
+    this.generic_popup_view.leave(callback);
   }
 });

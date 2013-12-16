@@ -7,7 +7,7 @@
   <li><a href="#" class="existing-discussions"><%= discussions.length %> Discussion(s)</a></li>
 <% } %>
 <% if (todos.length) { %>
-  <li><a href="#"><%= todos.length %> Todos</a></li>
+  <li><a href="#"><%= todos.length %> Todo(s)</a></li>
 <% } %>
 </ul>
 <ul>
@@ -17,5 +17,43 @@
   <li><a href="#">File</a></li>
   <li><a href="#">Date</a></li>
 </ul>
-
 </nav>
+
+<section class="item" id="latest">
+  <h3>Latest Project Updates</h3>
+  <ul>
+  <% if (discussions.length) { %>
+    <% var discussion = discussions.at(discussions.length - 1) %>
+    <% var date = Date.parse(discussion.get("created_at")) %>
+    <% date = new Date(date) %>
+    <% date = date.toDateString().slice(4,-5) %>
+    <li><time><%= date %></time> Discussion created: <%= discussion.get("title") %></li>
+  <% } %>
+
+  <% if (todos.length) { %>
+    <% var todo = todos.at(todos.length - 1) %>
+    <% var date = Date.parse(todo.get("created_at")) %>
+    <% date = new Date(date) %>
+    <% date = date.toDateString().slice(4,-5) %>
+    <li><time><%= date %></time> Todo created: <%= todo.get("title") %></li>
+  <% } %>
+  </ul>
+</section>
+
+<section class="item group inline" id="inline_discussions">
+  <h3>Discussions</h3><button>Post a new message</button>
+  <ul>
+    <% discussions.each(function(discussion) { %>
+      <li><h4><%= discussion.get("username") %> posted:</h4> <a href="#"><%= discussion.get("title") %></a></li>
+    <% }) %>
+  </ul>
+</section>
+
+<section class="item group inline" id="inline_todos">
+  <h3>Todos</h3><button>Create a new todo</button>
+  <ul>
+    <% todos.each(function(todo) { %>
+      <li><a href="#"><%= todo.get("title") %></a></li>
+    <% }) %>
+  </ul>
+</section>

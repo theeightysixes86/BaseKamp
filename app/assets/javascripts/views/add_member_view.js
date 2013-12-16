@@ -6,8 +6,8 @@ BaseKamp.Views.AddMemberView = Backbone.View.extend({
 
   render: function() {
     this.generic_popup_view.render();
-
     this.rendered_height = this.generic_popup_view.rendered_height;
+
     return this;
   },
 
@@ -16,6 +16,6 @@ BaseKamp.Views.AddMemberView = Backbone.View.extend({
   },
 
   leave: function(callback) {
-    this.generic_popup_view.leave();
+    this.generic_popup_view.leave(callback);
   }
 })

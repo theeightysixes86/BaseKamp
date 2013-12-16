@@ -16,7 +16,7 @@ class ProjectsController < ApplicationController
   end
 
   def associated_info
-    @project = Project.find_by_id(params[:id])
-    render json: { discussions: @project.discussions, todos: @project.todos }
+    @project = Project.includes(:discussions, :todos).find_by_id(params[:id])
+    render json: { discussions: @project.discussions.order("created_at ASC"), todos: @project.todos.order("created_at ASC") }
   end
 end
