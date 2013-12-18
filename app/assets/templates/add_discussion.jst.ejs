@@ -1,0 +1,30 @@
+<form>
+<input name="" placeholder="Type the subject of this message..." class="title">
+
+<div class="controls group">
+  <ul>
+    <li data-view="bold"> <b>Bold</b> </li>
+    <li data-view="italic"> <i>Italics</i> </li>
+    <li data-view="underline"> <u>Underline</u> </li>
+    <li data-view="insertunorderedlist"> &bull; Bullets </li>
+  </ul>
+</div>
+
+<div contenteditable="true" class="message" id="msg" data-placeholder="Type your message here...">
+</div>
+
+<button>Create New Discussion</button> or <a href="#" class="cancel">Cancel</a>
+</form>
+
+<script>
+  (function ($) {
+      $('div[data-placeholder]').on('keydown keypress input', function() {
+          if (this.textContent) {
+              this.dataset.divPlaceholderContent = 'true';
+          }
+          else {
+              delete(this.dataset.divPlaceholderContent);
+          }
+      });
+  })(jQuery);
+</script>

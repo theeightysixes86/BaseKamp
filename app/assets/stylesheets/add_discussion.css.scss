@@ -1,0 +1,83 @@
+#add_discussion {
+  position: absolute;
+  top: 60px;
+  left: 20px;
+  width: 0;
+  height: 0;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0px 0px 7px #999;
+
+  div[data-placeholder]:not(:focus):not([data-div-placeholder-content]):before {
+      content: attr(data-placeholder);
+      float: left;
+      margin-left: 5px;
+      color: #ccc;
+  }
+
+  input.title {
+    border: 0;
+    background: white;
+    outline: none;
+    padding: 30px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 24px;
+    width: 700px;
+  }
+
+  button {
+    margin: 0px 10px 20px 20px;
+    background: green;
+    color: white;
+    border-radius: 5px;
+    border: 0;
+    font-size: 15px;
+    width: auto;
+    padding: 10px;
+    box-shadow: 0px 0px 6px #333;
+    outline: none;
+
+    &:focus {
+      box-shadow: 0px 0px 0px;
+    }
+  }
+
+  .message {
+    margin: 20px;
+    padding: 10px;
+    border: 1px dashed #ccf;
+    border-radius: 4px;
+    outline: none;
+    height: 220px;
+    overflow: scroll;
+  }
+
+  .controls {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+
+    ul {
+      float: left;
+      padding-left: 30px;
+      font-size: 13px;
+    }
+
+    li {
+      cursor: pointer;
+      float: left;
+      padding: 10px;
+      border-right: 1px solid #ddd;
+
+      &:first-child {
+        border-left: 1px solid #ddd;
+      }
+    }
+  }
+}
+
+#msg {
+  ul, li {
+     list-style-type: disc;
+     list-style-position: inside;
+  }
+}

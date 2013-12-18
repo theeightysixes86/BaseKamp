@@ -16,6 +16,10 @@ BaseKamp.Models.Project = Backbone.Model.extend({
           that.todos.add(new BaseKamp.Models.Todo(datum));
         });
 
+        that.recents = data.recents
+
+        console.log(data.recents)
+
         callback();
       }
     });

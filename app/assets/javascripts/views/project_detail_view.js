@@ -13,6 +13,7 @@ BaseKamp.Views.ProjectDetailView = Backbone.View.extend({
     "click .existing-discussions": "add_child_view",
     "click aside": "add_child_view",
     "click h2": "remove_child_view",
+    "click .message-btn": "add_child_view"
   },
 
   remove_child_view: function() {
@@ -36,6 +37,8 @@ BaseKamp.Views.ProjectDetailView = Backbone.View.extend({
       that.childView = new BaseKamp.Views.AddMemberView;
     } else if ($target.hasClass('existing-discussions')) {
       that.childView = new BaseKamp.Views.DiscussionsIndexView;
+    } else if ($target.hasClass('message-btn')) {
+      that.childView = new BaseKamp.Views.NewDiscussionView({parent: this});
     }
 
     // .render() for a childView should return an empty $("<div></div>") w/ css ID.
@@ -89,7 +92,7 @@ BaseKamp.Views.ProjectDetailView = Backbone.View.extend({
     this.$el.empty();
     var templateFn = JST["project_show"];
 
-    var renderedContent = templateFn({ project: this.model, discussions: this.model.discussions, todos: this.model.todos });
+    var renderedContent = templateFn({ project: this.model, discussions: this.model.discussions, todos: this.model.todos, recents: this.model.recents });
     this.$el.append(renderedContent);
 
     return this;

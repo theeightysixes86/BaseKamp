@@ -9,11 +9,11 @@ BaseKamp.Routers.ProjectRouter = Backbone.Router.extend({
   },
 
   project_index: function() {
-    // this.swap(new BaseKamp.Views.ProjectIndexView);
+    this.swap(new BaseKamp.Views.ProjectIndexView);
 
     // Testing
 
-    this.project_detail(21);
+    // this.project_detail(21);
   },
 
   project_detail: function(id) {

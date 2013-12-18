@@ -22,30 +22,30 @@
 <section class="item" id="latest">
   <h3>Latest Project Updates</h3>
   <ul>
-  <% if (discussions.length) { %>
-    <% var discussion = discussions.at(discussions.length - 1) %>
-    <% var date = Date.parse(discussion.get("created_at")) %>
-    <% date = new Date(date) %>
-    <% date = date.toDateString().slice(4,-5) %>
-    <li><time><%= date %></time> Discussion created: <%= discussion.get("title") %></li>
-  <% } %>
 
-  <% if (todos.length) { %>
-    <% var todo = todos.at(todos.length - 1) %>
-    <% var date = Date.parse(todo.get("created_at")) %>
+  <% recents.forEach(function(recent) { %>
+    <% var date = Date.parse(recent.created_at) %>
     <% date = new Date(date) %>
     <% date = date.toDateString().slice(4,-5) %>
-    <li><time><%= date %></time> Todo created: <%= todo.get("title") %></li>
+    <li><time><%= date %></time> Created: <%= recent.title %></li>
+
+  <% }) %>
+
+  <% if (recents.length == 0) { %>
+    <li><time>No updates to display!</time></li>
   <% } %>
   </ul>
 </section>
 
 <section class="item group inline" id="inline_discussions">
-  <h3>Discussions</h3><button>Post a new message</button>
+  <h3>Discussions</h3><button class="message-btn">Post a new message</button>
   <ul>
     <% discussions.each(function(discussion) { %>
       <li><h4><%= discussion.get("username") %> posted:</h4> <a href="#"><%= discussion.get("title") %></a></li>
     <% }) %>
+    <% if (discussions.length == 0) { %>
+      <li>No discussions to display!</li>
+    <% } %>
   </ul>
 </section>
 
@@ -55,5 +55,8 @@
     <% todos.each(function(todo) { %>
       <li><a href="#"><%= todo.get("title") %></a></li>
     <% }) %>
+    <% if (todos.length == 0) { %>
+      <li>No todos to display!</li>
+    <% } %>
   </ul>
 </section>
