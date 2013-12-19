@@ -1,4 +1,5 @@
 BaseKamp.Views.DiscussionsIndexView = Backbone.View.extend({
+  // Abstracted most of the logic into a 'generic popup view' that we leverage here.
   initialize: function() {
     this.generic_popup_view = new BaseKamp.Views.GenericPopupView({ id: "discussions", jst: "discussions_index" });
     this.$el = this.generic_popup_view.$el;

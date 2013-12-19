@@ -1,4 +1,5 @@
 BaseKamp.Views.NewDiscussionView = Backbone.View.extend({
+  // We leverage generic popup view here.
   initialize: function(options) {
     this.parent = options.parent;
     this.generic_popup_view = new BaseKamp.Views.GenericPopupView({ id: "add_discussion", jst: "add_discussion" });
@@ -7,14 +8,21 @@ BaseKamp.Views.NewDiscussionView = Backbone.View.extend({
   },
 
   events: {
+    // Bold, italic, underline, bullet list item clicks
     "mousedown li": "formatDiv",
+    // Removes the view
     "click .cancel": "leave_via_parent",
+    // Submits discussion for creation
     "click button": "submit_form",
+    // Update the display of the bold/italic/underline buttons when text is selected in the
+    // content-editable div.
     "click #msg": "format_controls",
+    // Same as previous but also respond to keypresses.
     "keyup #msg": "format_controls"
   },
 
   format_controls: function(event) {
+    // Need this since bold/italic/underline text can be nested.
     var select_1 = document.getSelection().anchorNode.parentNode.localName;
     var select_2 = document.getSelection().anchorNode.parentNode.parentNode.localName;
     var select_3 = document.getSelection().anchorNode.parentNode.parentNode.parentNode.localName;
@@ -22,8 +30,6 @@ BaseKamp.Views.NewDiscussionView = Backbone.View.extend({
     var $boldLi = $("li[data-view=bold]");
     var $italLi = $("li[data-view=italic]");
     var $undrLi = $("li[data-view=underline]");
-
-    // This and the similar function used in formatDiv need to be abstracted.
 
     if ((select_1 == "b") || (select_2 == "b") || (select_3 == "b")) {
       $boldLi.addClass('selected');
@@ -43,7 +49,6 @@ BaseKamp.Views.NewDiscussionView = Backbone.View.extend({
       $undrLi.removeClass('selected');
     }
 
-    // console.log(document.getSelection().anchorNode.parentElement.localName);
   },
 
   submit_form: function(event) {
@@ -71,52 +76,41 @@ BaseKamp.Views.NewDiscussionView = Backbone.View.extend({
     this.parent.remove_child_view();
   },
 
-  formatDiv: function(event) {
-    var formatting = $(event.currentTarget).attr('data-view');
+  toggle_controls: function(formatting) {
+    var tag = formatting.slice(0,1);
+    var $li = $("li[data-view=" + formatting + "]");
 
-    document.execCommand(formatting, false, null);
-
-    // Terribly wet, also a little buggy.
     var selection = document.getSelection();
     var select_1 = document.getSelection().anchorNode.parentNode.localName;
     var select_2 = document.getSelection().anchorNode.parentNode.parentNode.localName;
     var select_3 = document.getSelection().anchorNode.parentNode.parentNode.parentNode.localName;
 
-    var $boldLi = $("li[data-view=bold]");
-    var $italLi = $("li[data-view=italic]");
-    var $undrLi = $("li[data-view=underline]");
+    console.log(selection);
 
-    if (formatting == "bold") {
-      if ((select_1 == "b") || (select_2 == "b") || (select_3 == "b")) {
-        if (selection.type == "Range") {
-          $boldLi.addClass('selected');
+    if ((select_1 == tag) || (select_2 == tag) || (select_3 == tag)) {
+      if (selection.type == "Range") {
+        $li.addClass('selected');
+      } else {
+        $li.removeClass('selected');
+      }
+    } else if ((select_1 == "div") || (select_2 == "div") || (select_3 == "div")) {
+      if (selection.type == "Range") {
+        $li.removeClass('selected');
+      } else {
+        if ($li.hasClass('selected')) {
+          $li.removeClass('selected');
         } else {
-          $boldLi.removeClass('selected');
-        }
-      } else if ((select_1 == "div") || (select_2 == "div") || (select_3 == "div")) {
-        if (selection.type == "Range") {
-          $boldLi.removeClass('selected');
-        } else {
-          $boldLi.addClass('selected');
+          $li.addClass('selected');
         }
       }
     }
+  },
 
-    if (formatting == "italic") {
-      if ((select_1 == "i") || (select_2 == "i") || (select_3 == "i")) {
-        $italLi.removeClass('selected');
-      } else if ((select_1 == "div") || (select_2 == "div") || (select_3 == "div")) {
-        $italLi.addClass('selected');
-      }
-    }
+  formatDiv: function(event) {
+    var formatting = $(event.currentTarget).attr('data-view');
 
-    if (formatting == "underline") {
-      if ((select_1 == "u") || (select_2 == "u") || (select_3 == "u")) {
-        $undrLi.removeClass('selected');
-      } else if ((select_1 == "div") || (select_2 == "div") || (select_3 == "div")) {
-        $undrLi.addClass('selected');
-      }
-    }
+    document.execCommand(formatting, false, null);
+    this.toggle_controls(formatting);
 
     return false;
   },

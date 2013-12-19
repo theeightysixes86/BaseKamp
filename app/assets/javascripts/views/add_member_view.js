@@ -1,4 +1,5 @@
 BaseKamp.Views.AddMemberView = Backbone.View.extend({
+  // Abstracted several views into a 'generic popup view', which we leverage here.
   initialize: function() {
     this.generic_popup_view = new BaseKamp.Views.GenericPopupView({ id: "add_members", jst: "add_members" });
     this.$el = this.generic_popup_view.$el;

@@ -11,23 +11,23 @@ BaseKamp.Routers.ProjectRouter = Backbone.Router.extend({
   project_index: function() {
     this.swap(new BaseKamp.Views.ProjectIndexView);
 
-    // Testing
-
+    // Brings up a detail view immediately for testing purposes:
     // this.project_detail(21);
   },
 
   project_detail: function(id) {
     var that = this;
     var project = BaseKamp.projects.get({id: id });
+
     project.fetch_associated_info(function() {
       var projectDetailView = new BaseKamp.Views.ProjectDetailView(project);
       that.swap(projectDetailView);
     });
-    // var projectDetailView = new BaseKamp.Views.ProjectDetailView(BaseKamp.projects.get({id: id }));
-    // projectDetailView.fetch_project_info(this.swap.bind(this, projectDetailView))
-    // this.swap(projectDetailView);
   },
 
+  // Swapping router to ensure we don't get zombie views.
+  // Removes refernece to the old view when a new view is 'swapped' in
+  // Each view's leave function is responsible for unbinding events.
   swap: function(newView) {
     var that = this;
 
