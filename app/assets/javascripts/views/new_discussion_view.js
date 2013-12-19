@@ -74,11 +74,10 @@ BaseKamp.Views.NewDiscussionView = Backbone.View.extend({
   formatDiv: function(event) {
     var formatting = $(event.currentTarget).attr('data-view');
 
-    console.log(document.getSelection().anchorNode.parentElement.localName);
-
     document.execCommand(formatting, false, null);
 
     // Terribly wet, also a little buggy.
+    var selection = document.getSelection();
     var select_1 = document.getSelection().anchorNode.parentNode.localName;
     var select_2 = document.getSelection().anchorNode.parentNode.parentNode.localName;
     var select_3 = document.getSelection().anchorNode.parentNode.parentNode.parentNode.localName;
@@ -89,9 +88,17 @@ BaseKamp.Views.NewDiscussionView = Backbone.View.extend({
 
     if (formatting == "bold") {
       if ((select_1 == "b") || (select_2 == "b") || (select_3 == "b")) {
-        $boldLi.removeClass('selected');
+        if (selection.type == "Range") {
+          $boldLi.addClass('selected');
+        } else {
+          $boldLi.removeClass('selected');
+        }
       } else if ((select_1 == "div") || (select_2 == "div") || (select_3 == "div")) {
-        $boldLi.addClass('selected');
+        if (selection.type == "Range") {
+          $boldLi.removeClass('selected');
+        } else {
+          $boldLi.addClass('selected');
+        }
       }
     }
 

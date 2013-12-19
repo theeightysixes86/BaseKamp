@@ -10,10 +10,12 @@ BaseKamp.Views.ProjectIndexView = Backbone.View.extend({
 
   events: {
     "click .star": "flip_favorite",
-    "click #new_project_box": "new_project"
+    "click .new_project_box": "new_project"
   },
 
-  new_project: function() {
+  new_project: function(event) {
+    event.preventDefault();
+
     var newProjectView = new BaseKamp.Views.NewProjectView();
     BaseKamp.projects_router.append(newProjectView);
   },
