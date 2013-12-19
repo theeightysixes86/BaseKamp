@@ -6,10 +6,12 @@ BaseKamp::Application.routes.draw do
   resources :projects, only: [:update, :create, :show] do
     member do
       get "associations", to: "projects#associated_info", as: "associated_info"
-      resources :discussions
+      resources :discussions, except: [:create]
       resources :todos
     end
   end
+
+  resources :discussions, only: [:create]
 
   post "user_exists", to: "users#user_exists"
 end

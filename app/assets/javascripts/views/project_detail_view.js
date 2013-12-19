@@ -4,6 +4,11 @@ BaseKamp.Views.ProjectDetailView = Backbone.View.extend({
 
     that.$el = $("<section class='group' id='project'>");
     that.model = project;
+
+    this.listenTo(that.model.discussions, "add", function() {
+      that.remove_child_view();
+      that.render.bind(that)();
+    });
   },
 
   events: {
@@ -17,6 +22,8 @@ BaseKamp.Views.ProjectDetailView = Backbone.View.extend({
   },
 
   remove_child_view: function() {
+    var that = this;
+
     if (this.childView) {
       this.childView.leave(function() {
         $("#project").removeAttr('style');

@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
 
   has_many :user_projects
   has_many :projects, through: :user_projects, source: :project
+  has_many :discussions
 
   def password=(pw_string)
     self.password_digest = BCrypt::Password.create(pw_string)
