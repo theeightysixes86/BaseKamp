@@ -56,6 +56,7 @@ BaseKamp.Views.ProjectDetailView = Backbone.View.extend({
       Backbone.history.navigate("#/projects/21/discussions");
       that.childView = new BaseKamp.Views.DiscussionsIndexView;
     } else if ($target.hasClass('message-btn')) {
+      Backbone.history.navigate("#/projects/21/discussion/new");
       that.childView = new BaseKamp.Views.NewDiscussionView({parent: this});
     } else if ($target.hasClass('discussion-detail')) {
       that.childView = new BaseKamp.Views.DiscussionDetailView({

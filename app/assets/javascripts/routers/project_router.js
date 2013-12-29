@@ -32,7 +32,6 @@ BaseKamp.Routers.ProjectRouter = Backbone.Router.extend({
   },
 
   project_detail: function(id) {
-    console.log("YES");
     if (this.currentView && this.currentView.childView) {
       this.currentView.childView.leave(function() {
         $("#project").removeAttr('style');

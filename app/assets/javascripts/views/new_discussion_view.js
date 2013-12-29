@@ -63,6 +63,8 @@ BaseKamp.Views.NewDiscussionView = Backbone.View.extend({
 
     var discussion = new BaseKamp.Models.Discussion({ title: title, body: body, project_id: project.get("id") });
 
+    // XSS VULNERABILITY!!!
+    // Need to cleanse input of all but <b>, <i>, <u>, <ul>, <li>.
     discussion.save({}, {
       success: function() {
         project.discussions.add(discussion);
