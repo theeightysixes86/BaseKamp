@@ -46,6 +46,8 @@ BaseKamp.Views.ProjectDetailView = Backbone.View.extend({
       that.childView = new BaseKamp.Views.DiscussionsIndexView;
     } else if ($target.hasClass('message-btn')) {
       that.childView = new BaseKamp.Views.NewDiscussionView({parent: this});
+    } else if ($target.hasClass('discussion-detail')) {
+      that.childView = new BaseKamp.Views.DiscussionDetailView({parent: this});
     }
 
     // .render() for a childView should return an empty $("<div></div>") w/ css ID.

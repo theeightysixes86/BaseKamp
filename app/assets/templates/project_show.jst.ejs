@@ -41,7 +41,7 @@
   <h3>Discussions</h3><button class="message-btn">Post a new message</button>
   <ul>
     <% discussions.each(function(discussion) { %>
-      <li><h4><%= discussion.get("username") %> posted:</h4> <a href="#"><%= discussion.get("title") %></a></li>
+      <li><h4><%= discussion.get("username") %> posted:</h4> <a href="#/projects/<%= project.get('id') %>/discussions/<%= discussion.get('id') %>" class="discussion-detail"><%= discussion.get("title") %></a></li>
     <% }) %>
     <% if (discussions.length == 0) { %>
       <li>No discussions to display!</li>

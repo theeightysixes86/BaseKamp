@@ -5,6 +5,7 @@ BaseKamp.Routers.ProjectRouter = Backbone.Router.extend({
 
   routes: {
     "": "project_index",
+    "projects/:id/discussions/:discussion_id": "discussion_detail",
     "projects/:id": "project_detail"
   },
 
@@ -13,6 +14,20 @@ BaseKamp.Routers.ProjectRouter = Backbone.Router.extend({
 
     // Brings up a detail view immediately for testing purposes:
     // this.project_detail(21);
+  },
+
+  discussion_detail: function(id, discussion_id) {
+    if (this.currentView) {
+      // Spoof the JavaScript event object.
+      // add_child_view sometimes responds to click events
+      // but I want it to respond to backbone router URL changes as well.
+      this.currentView.add_child_view({
+        target: $(".discussion-detail"),
+        preventDefault: function() { }
+      });
+    } else {
+      window.location.href = "#/projects/" + id;
+    }
   },
 
   project_detail: function(id) {
