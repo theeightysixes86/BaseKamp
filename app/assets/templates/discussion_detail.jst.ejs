@@ -1,1 +1,6 @@
-WHITE NOISE
+<h3><%= discussion.get("title") %></h3>
+<% var date = Date.parse(discussion.get("created_at")) %>
+<% date = new Date(date) %>
+<% date = date.toDateString().slice(4,-5) %>
+<h4>Posted by <%= discussion.get("username") %> on <%= date %></h4>
+<p><%= discussion.get("body") %>

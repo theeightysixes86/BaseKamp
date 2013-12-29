@@ -5,13 +5,13 @@ BaseKamp.Views.GenericPopupView = Backbone.View.extend({
     this.$el = $("<div id='" + obj.id + "'></div>");
   },
 
-  render: function() {
+  render: function(opts) {
     this.$el.empty();
 
     // Here we render the view off screen to figure out what it's height should be for actual rendering
     var to_get_height = $("<div id='" + this.attrs.id + "' style='height: auto; width: 770px; position: absolute; top: 10000px;'></div>");
     var templateFn = JST[this.attrs.jst];
-    var renderedContent = templateFn();
+    var renderedContent = templateFn(opts);
 
     to_get_height.append(renderedContent);
     $("body").append(to_get_height);
@@ -22,9 +22,9 @@ BaseKamp.Views.GenericPopupView = Backbone.View.extend({
     return this;
   },
 
-  append_content: function() {
+  append_content: function(opts) {
     var templateFn = JST[this.attrs.jst];
-    var renderedContent = templateFn();
+    var renderedContent = templateFn(opts);
 
     $("#" + this.attrs.id).append(renderedContent);
   },

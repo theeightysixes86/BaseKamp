@@ -3,7 +3,6 @@ BaseKamp.Views.ProjectDetailView = Backbone.View.extend({
     var that = this;
 
     that.$el = $("<section class='group' id='project'>");
-    that.model = project;
 
     this.listenTo(that.model.discussions, "add", function() {
       that.remove_child_view();
@@ -24,30 +23,45 @@ BaseKamp.Views.ProjectDetailView = Backbone.View.extend({
   remove_child_view: function() {
     var that = this;
 
-    if (this.childView) {
-      this.childView.leave(function() {
-        $("#project").removeAttr('style');
-        $("#project h2").removeClass('link');
-      });
-      this.childView = null;
-    }
+    // BUG BUG BUG BUG BUG
+    // This needs to change the URL back to /projects/:id
+    // preferrably without triggering the router or a page refresh?
+    // if (this.childView) {
+    //   this.childView.leave(function() {
+    //     $("#project").removeAttr('style');
+    //     $("#project h2").removeClass('link');
+    //   });
+    //   this.childView = null;
+      Backbone.history.navigate("#/projects/" + this.model.get("id"));
+    // }
   },
 
-  add_child_view: function(event) {
-    var $target = $(event.target);
-
+  add_child_view: function(e) {
+    var $target = $(e.target);
     var that = this;
-    event.preventDefault();
+
+    // e may be either the JS event object, or a spoofed event object.
+    // This seems like bad practice, I should remedy it.
+    if (e.preventDefault) {
+      e.preventDefault();
+    }
+
     if (that.childView) { return; }
 
+    // Anything with Backbone.history.navigate should just be made into links.
     if ($target.hasClass('add-members')) {
+      Backbone.history.navigate("#/projects/21/members");
       that.childView = new BaseKamp.Views.AddMemberView;
     } else if ($target.hasClass('existing-discussions')) {
+      Backbone.history.navigate("#/projects/21/discussions");
       that.childView = new BaseKamp.Views.DiscussionsIndexView;
     } else if ($target.hasClass('message-btn')) {
       that.childView = new BaseKamp.Views.NewDiscussionView({parent: this});
     } else if ($target.hasClass('discussion-detail')) {
-      that.childView = new BaseKamp.Views.DiscussionDetailView({parent: this});
+      that.childView = new BaseKamp.Views.DiscussionDetailView({
+        parent: this,
+        model: this.model.discussions.get({ id: e.discussionId })
+      });
     }
 
     // .render() for a childView should return an empty $("<div></div>") w/ css ID.

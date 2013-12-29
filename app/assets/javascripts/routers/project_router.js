@@ -22,8 +22,9 @@ BaseKamp.Routers.ProjectRouter = Backbone.Router.extend({
       // add_child_view sometimes responds to click events
       // but I want it to respond to backbone router URL changes as well.
       this.currentView.add_child_view({
-        target: $(".discussion-detail"),
-        preventDefault: function() { }
+        target: ".discussion-detail",
+        preventDefault: function() { },
+        discussionId: discussion_id
       });
     } else {
       window.location.href = "#/projects/" + id;
@@ -31,13 +32,22 @@ BaseKamp.Routers.ProjectRouter = Backbone.Router.extend({
   },
 
   project_detail: function(id) {
-    var that = this;
-    var project = BaseKamp.projects.get({id: id });
+    console.log("YES");
+    if (this.currentView && this.currentView.childView) {
+      this.currentView.childView.leave(function() {
+        $("#project").removeAttr('style');
+        $("#project h2").removeClass('link');
+      });
+      this.currentView.childView = null;
+    } else {
+      var that = this;
+      var project = BaseKamp.projects.get({id: id });
 
-    project.fetch_associated_info(function() {
-      var projectDetailView = new BaseKamp.Views.ProjectDetailView(project);
-      that.swap(projectDetailView);
-    });
+      project.fetch_associated_info(function() {
+        var projectDetailView = new BaseKamp.Views.ProjectDetailView({ model: project });
+        that.swap(projectDetailView);
+      });
+    }
   },
 
   // Swapping router to ensure we don't get zombie views.

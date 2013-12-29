@@ -6,14 +6,14 @@ BaseKamp.Views.DiscussionDetailView = Backbone.View.extend({
   },
 
   render: function() {
-    this.generic_popup_view.render();
+    this.generic_popup_view.render({ discussion: this.model });
     this.rendered_height = this.generic_popup_view.rendered_height;
 
     return this;
   },
 
   append_content: function() {
-    this.generic_popup_view.append_content();
+    this.generic_popup_view.append_content({ discussion: this.model });
   },
 
   leave: function(callback) {
